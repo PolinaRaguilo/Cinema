@@ -27,6 +27,7 @@ const theme = createMuiTheme({
         backgroundColor: palette.background.primary,
         color: palette.text.main,
         textTransform: 'unset',
+        transition: 'unset',
         '&:hover': {
           backgroundColor: '#FFFFFF',
           color: palette.background.primary,
@@ -34,9 +35,15 @@ const theme = createMuiTheme({
         },
       },
     },
+    MuiTypography: {
+      root: {
+        color: palette.text.main,
+      },
+    },
     MuiTextField: {
       root: {
         backgroundColor: '#FFFFFF',
+        borderRadius: 5,
       },
     },
     MuiOutlinedInput: {

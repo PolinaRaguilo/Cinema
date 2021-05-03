@@ -1,4 +1,5 @@
 const { Box, TextField, Button, makeStyles } = require('@material-ui/core');
+const { default: FilmCard } = require('./film-card');
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -10,13 +11,12 @@ const useStyles = makeStyles(() => ({
     width: 168,
     height: 85,
     fontSize: 24,
-    fontWeight: 'normal',
+    borderRadius: 5,
   },
-  input__search: {
-    position: 'relative',
-  },
+
   form__search: {
     display: 'flex',
+    marginBottom: 48,
   },
 }));
 
@@ -25,13 +25,10 @@ const MainPage = () => {
   return (
     <Box className={classes.wrapper}>
       <form className={classes.form__search}>
-        <TextField
-          variant="outlined"
-          placeholder="Type to search..."
-          className={classes.input__search}
-        />
+        <TextField variant="outlined" placeholder="Type to search..." />
         <Button className={classes.btn__search}>Search</Button>
       </form>
+      <FilmCard />
     </Box>
   );
 };

@@ -7,6 +7,7 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   card__film: {
@@ -15,6 +16,7 @@ const useStyles = makeStyles({
     height: 274,
     borderRadius: 5,
     padding: 24,
+    marginBottom: 32,
   },
   poster: {
     backgroundColor: '#C4C4C4',
@@ -63,6 +65,10 @@ const useStyles = makeStyles({
       border: '3px solid #FFFFFF',
       color: '#FFFFFF',
     },
+    '& a': {
+      textDecoration: 'none',
+      color: '#FFFFFF',
+    },
   },
 });
 
@@ -88,7 +94,9 @@ const FilmCard = () => {
         </Box>
         <Typography className={classes.description__text}>year</Typography>
         <Typography className={classes.description__text}>runtime</Typography>
-        <Button className={classes.button__more}>More info...</Button>
+        <Button className={classes.button__more}>
+          <Link to="/movie/:id">More info...</Link>
+        </Button>
       </Box>
     </Card>
   );

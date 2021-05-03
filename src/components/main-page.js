@@ -5,7 +5,7 @@ const useStyles = makeStyles(() => ({
   wrapper: {
     width: 840,
     margin: '0px auto',
-    paddingTop: 80,
+    marginTop: 80,
   },
   btn__search: {
     width: 168,
@@ -28,6 +28,7 @@ const MainPage = () => {
         <TextField variant="outlined" placeholder="Type to search..." />
         <Button className={classes.btn__search}>Search</Button>
       </form>
+      <FilmCard />
       <FilmCard />
     </Box>
   );

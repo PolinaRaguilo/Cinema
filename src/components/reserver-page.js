@@ -1,4 +1,13 @@
-import { Box, makeStyles, Typography } from '@material-ui/core';
+import {
+  Box,
+  makeStyles,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  Typography,
+} from '@material-ui/core';
+import SelectedMovieCard from './selected-movie-card';
 
 const useStyles = makeStyles({
   wrapper: {
@@ -8,11 +17,18 @@ const useStyles = makeStyles({
     margin: '0 auto',
     marginTop: 24,
     padding: '36px 117px 66px 112px',
-    '& p:first-child': {
-      fontSize: 24,
-      fontWeight: 'bold',
-      marginBottom: 32,
-    },
+  },
+  mainTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 32,
+  },
+  seat: {
+    width: 36,
+    height: 36,
+    backgroundColor: '#C4C4C4',
+    marginRight: 16,
+    marginBottom: 24,
   },
 });
 
@@ -20,7 +36,23 @@ const ReservePage = () => {
   const classes = useStyles();
   return (
     <Box className={classes.wrapper}>
-      <Typography>Choose your place </Typography>
+      <Typography className={classes.mainTitle}>Choose your place </Typography>
+      <Box>
+        <Table>
+          <TableBody>
+            {[1, 2, 3, 4, 5].map((row, i) => (
+              <TableRow key={i}>
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((cell, i) => (
+                  <TableCell key={i}>
+                    <Box className={classes.seat} />
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Box>
+      <SelectedMovieCard />
     </Box>
   );
 };

@@ -12,7 +12,7 @@ const App = () => {
       <ThemeProvider>
         <Header />
         <Route exact path="/" component={MainPage} />
-        <Route path="/movie/:id" component={FilmDescription} />
+        <Route exact path="/movie/:id" component={FilmDescription} />
         <Route path="/reserve/:id" component={ReservePage} />
         <Route path="/user" component={UserChoice} />
       </ThemeProvider>

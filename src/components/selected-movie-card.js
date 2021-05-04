@@ -63,6 +63,7 @@ const useStyles = makeStyles({
   },
   ticketsUser: {
     position: 'absolute',
+    fontSize: 24,
     top: 24,
     right: 16,
   },
@@ -71,7 +72,7 @@ const useStyles = makeStyles({
 const SelectedMovieCard = () => {
   const classes = useStyles();
   const { pathname } = useLocation();
-  console.log(pathname);
+
   return (
     <Card
       className={

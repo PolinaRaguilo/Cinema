@@ -5,6 +5,7 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   wrapper: {
@@ -111,7 +112,9 @@ const FilmDescription = () => {
         <Typography className={classes.rating}>
           Metascore: 12 Imdb rating: 12
         </Typography>
-        <Button className={classes.btn}>Buy a ticket</Button>
+        <Link to="/reserve/:id">
+          <Button className={classes.btn}>Buy a ticket</Button>
+        </Link>
       </Box>
       <Box className={classes.inner__wrapper}>
         <Box className={classes.information}>

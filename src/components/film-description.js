@@ -55,6 +55,50 @@ const useStyles = makeStyles({
     width: 140,
     height: 50,
   },
+  inner__wrapper: {
+    display: 'flex',
+  },
+  photo__wrapper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    marginTop: 26,
+    marginLeft: 20,
+  },
+  single__poster: {
+    width: 180,
+    height: 225,
+    backgroundColor: '#C4C4C4',
+    '&:nth-child(odd)': {
+      marginRight: 24,
+    },
+  },
+  information: {
+    width: 390,
+    marginTop: 15,
+  },
+  information__box: {
+    width: 365,
+    minHeight: 350,
+    backgroundColor: '#000000',
+    padding: '16px 24px',
+    '& > p': {
+      fontSize: 14,
+      marginBottom: 8,
+    },
+    '& > p:first-child': {
+      marginBottom: 20,
+    },
+  },
+  description: {
+    fontSize: 14,
+    '&:first-child': {
+      marginBottom: 15,
+    },
+    '&:nth-child(2)': {
+      marginBottom: 27,
+      width: 385,
+    },
+  },
 });
 
 const FilmDescription = () => {
@@ -68,6 +112,37 @@ const FilmDescription = () => {
           Metascore: 12 Imdb rating: 12
         </Typography>
         <Button className={classes.btn}>Buy a ticket</Button>
+      </Box>
+      <Box className={classes.inner__wrapper}>
+        <Box className={classes.information}>
+          <Typography className={classes.description}>Description:</Typography>
+          <Typography className={classes.description}>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita,
+            labore. Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+            Expedita, labore. Lorem ipsum, dolor sit amet consectetur
+            adipisicing elit. Expedita, labore.
+          </Typography>
+          <Box className={classes.information__box}>
+            <Typography>Info box</Typography>
+
+            <Typography>Country: dfsdf</Typography>
+            <Typography>Awards: dfsdf</Typography>
+            <Typography>Country: 1589</Typography>
+            <Typography>Actors: fsdf</Typography>
+            <Typography>Year: 1589</Typography>
+            <Typography>Director: fsdf</Typography>
+            <Typography>Genre: fsdfsf</Typography>
+            <Typography>Language: dgdfgfg</Typography>
+            <Typography>Box office: dfsdf</Typography>
+            <Typography>Released: 1589</Typography>
+          </Box>
+        </Box>
+        <Box className={classes.photo__wrapper}>
+          <CardMedia className={classes.single__poster} />
+          <CardMedia className={classes.single__poster} />
+          <CardMedia className={classes.single__poster} />
+          <CardMedia className={classes.single__poster} />
+        </Box>
       </Box>
     </Box>
   );

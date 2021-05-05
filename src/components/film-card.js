@@ -72,13 +72,14 @@ const useStyles = makeStyles({
   },
 });
 
-const FilmCard = () => {
+const FilmCard = (props) => {
   const classes = useStyles();
+  const { title, poster, year } = props;
   return (
     <Card className={classes.card__film}>
-      <CardMedia className={classes.poster} />
+      <CardMedia className={classes.poster} image={poster} />
       <CardContent className={classes.description}>
-        <Typography className={classes.film__title}>Film name</Typography>
+        <Typography className={classes.film__title}>{title}</Typography>
         <Typography className={classes.description__text}>
           actor, actor
         </Typography>
@@ -92,7 +93,7 @@ const FilmCard = () => {
           <Typography className={classes.tag}>tag</Typography>
           <Typography className={classes.tag}>tag</Typography>
         </Box>
-        <Typography className={classes.description__text}>year</Typography>
+        <Typography className={classes.description__text}>{year}</Typography>
         <Typography className={classes.description__text}>runtime</Typography>
         <Button className={classes.button__more}>
           <Link to="/movie/:id">More info...</Link>

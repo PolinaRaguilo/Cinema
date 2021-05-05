@@ -72,6 +72,26 @@ const theme = createMuiTheme({
         padding: 0,
       },
     },
+    MuiPagination: {
+      ul: {
+        justifyContent: 'center',
+      },
+    },
+    MuiPaginationItem: {
+      root: {
+        color: 'white',
+      },
+      page: {
+        '&.Mui-selected': {
+          backgroundColor: palette.background.primary,
+          '&:hover': {
+            backgroundColor: 'white !important',
+            color: palette.background.primary,
+            border: '3px solid #2B2243',
+          },
+        },
+      },
+    },
   },
 });
 

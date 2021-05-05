@@ -130,7 +130,6 @@ const FilmDescription = () => {
 
             <Typography>Country: dfsdf</Typography>
             <Typography>Awards: dfsdf</Typography>
-            <Typography>Country: 1589</Typography>
             <Typography>Actors: fsdf</Typography>
             <Typography>Year: 1589</Typography>
             <Typography>Director: fsdf</Typography>

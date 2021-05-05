@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   Box,
   Button,
@@ -7,11 +8,17 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { API_URL_DATA } from '../config/constants';
+import useFilms from '../hooks/useFilms';
+import { API__KEY } from '../key';
 
 const useStyles = makeStyles({
   card__film: {
     display: 'flex',
+    position: 'relative',
     backgroundColor: '#2B2243',
     height: 274,
     borderRadius: 5,
@@ -27,6 +34,12 @@ const useStyles = makeStyles({
     padding: 0,
     marginLeft: 24,
     width: 460,
+    '& p:nth-child(3)': {
+      width: 390,
+    },
+    '& p:nth-child(1)': {
+      width: 300,
+    },
   },
   film__title: {
     fontSize: 24,
@@ -39,15 +52,18 @@ const useStyles = makeStyles({
   tags__wrapper: {
     display: 'flex',
     marginBottom: 20,
+    '&~p': {
+      textAlign: 'right',
+    },
   },
   tag: {
-    width: 35,
+    minWidth: 50,
     height: 25,
     background: '#000000',
     fontSize: 10,
     borderRadius: 5,
     padding: '5px 8px 6px 10px',
-    marginRight: 14,
+    marginRight: 10,
     '&:last-child': {
       marginRight: 0,
     },
@@ -57,6 +73,9 @@ const useStyles = makeStyles({
     padding: '15px 19px',
     width: 140,
     height: 50,
+    position: 'absolute',
+    bottom: 24,
+    right: 24,
     marginTop: 50,
     fontSize: 14,
     borderRadius: 5,
@@ -74,29 +93,57 @@ const useStyles = makeStyles({
 
 const FilmCard = (props) => {
   const classes = useStyles();
-  const { title, poster, year } = props;
+
+  const { id } = props;
+
+  const [current, setCurrent] = useState(null);
+
+  // eslint-disable-next-line no-unused-vars
+  const getCurrent = async () => {
+    try {
+      const response = await axios.get(
+        `${API_URL_DATA}/?apikey=${API__KEY}&i=${id}`,
+      );
+      await setCurrent(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getCurrent();
+  }, []);
+
+  if (current === null) {
+    return null;
+  }
+  console.log(current);
   return (
     <Card className={classes.card__film}>
-      <CardMedia className={classes.poster} image={poster} />
+      <CardMedia className={classes.poster} image={current.Poster} />
       <CardContent className={classes.description}>
-        <Typography className={classes.film__title}>{title}</Typography>
+        <Typography className={classes.film__title}>{current.Title}</Typography>
         <Typography className={classes.description__text}>
-          actor, actor
+          {current.Actors}
         </Typography>
         <Typography className={classes.description__text}>
-          Description
+          {current.Plot}
         </Typography>
       </CardContent>
       <Box>
         <Box className={classes.tags__wrapper}>
-          <Typography className={classes.tag}>tag</Typography>
-          <Typography className={classes.tag}>tag</Typography>
-          <Typography className={classes.tag}>tag</Typography>
+          {current.Genre.split(',').map((item) => {
+            return <Typography className={classes.tag}>{item}</Typography>;
+          })}
         </Box>
-        <Typography className={classes.description__text}>{year}</Typography>
-        <Typography className={classes.description__text}>runtime</Typography>
+        <Typography className={classes.description__text}>
+          {current.Year} year
+        </Typography>
+        <Typography className={classes.description__text}>
+          {current.Runtime}
+        </Typography>
         <Button className={classes.button__more}>
-          <Link to="/movie/:id">More info...</Link>
+          <Link to={`/movie/${id}`}>More info...</Link>
         </Button>
       </Box>
     </Card>

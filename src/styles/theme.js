@@ -92,6 +92,16 @@ const theme = createMuiTheme({
         },
       },
     },
+    MuiCircularProgress: {
+      colorPrimary: {
+        color: palette.background.primary,
+        width: '100px !important',
+        height: '100px !important',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+      },
+    },
   },
 });
 

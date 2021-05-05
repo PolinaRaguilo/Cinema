@@ -10,9 +10,8 @@ const useFilms = (url) => {
     try {
       setLoading(true);
       const response = await axios.get(url);
-      console.log(response.data);
-      setFilms(response.data.Search);
-      setTotal(response.data.totalResults);
+      await setFilms(response.data.Search);
+      await setTotal(response.data.totalResults);
 
       setLoading(false);
     } catch (err) {

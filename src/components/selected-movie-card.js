@@ -5,7 +5,8 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import { Link, useLocation } from 'react-router-dom';
+
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 const useStyles = makeStyles({
   card: {
@@ -27,6 +28,7 @@ const useStyles = makeStyles({
     fontWeight: 'bold',
     width: 270,
     marginBottom: 23,
+
     '&:nth-child(even)': {
       textAlign: 'right',
     },
@@ -67,11 +69,19 @@ const useStyles = makeStyles({
     top: 24,
     right: 16,
   },
+  link: {
+    textDecoration: 'none',
+    '&:hover': {
+      textDecoration: 'underline',
+      color: 'white',
+    },
+  },
 });
 
 const SelectedMovieCard = () => {
   const classes = useStyles();
   const { pathname } = useLocation();
+  const { id } = useParams();
 
   return (
     <Card
@@ -81,7 +91,10 @@ const SelectedMovieCard = () => {
           : classes.card
       }
     >
-      <Typography className={classes.title}>Movie name:</Typography>
+      <Link to={`/movie/${id}`} className={classes.link}>
+        <Typography className={classes.title}>Movie name</Typography>
+      </Link>
+
       <CardContent className={classes.inner}>
         {pathname === '/user' ? (
           <Typography className={classes.ticketsUser}>123 tickets</Typography>

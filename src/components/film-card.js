@@ -12,7 +12,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { API_URL_DATA } from '../config/constants';
-import useFilms from '../hooks/useFilms';
+
 import { API__KEY } from '../key';
 
 const useStyles = makeStyles({
@@ -98,12 +98,12 @@ const FilmCard = (props) => {
 
   const [current, setCurrent] = useState(null);
 
-  // eslint-disable-next-line no-unused-vars
   const getCurrent = async () => {
     try {
       const response = await axios.get(
         `${API_URL_DATA}/?apikey=${API__KEY}&i=${id}`,
       );
+
       await setCurrent(response.data);
     } catch (e) {
       console.log(e);

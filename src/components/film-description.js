@@ -1,11 +1,17 @@
+/* eslint-disable no-unused-vars */
 import {
   Box,
   Button,
   CardMedia,
+  CircularProgress,
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { API_URL_DATA } from '../config/constants';
+import { API__KEY } from '../key';
 
 const useStyles = makeStyles({
   wrapper: {
@@ -30,7 +36,7 @@ const useStyles = makeStyles({
     bottom: 0,
     left: 24,
     top: 16,
-    width: 454,
+    // width: 454,
     height: 57,
     backgroundColor: 'rgba(43, 34, 67, 0.1)',
     fontSize: 24,
@@ -40,7 +46,7 @@ const useStyles = makeStyles({
   },
   rating: {
     position: 'absolute',
-    width: 115,
+    width: 140,
     height: 57,
     bottom: 16,
     right: 24,
@@ -104,15 +110,38 @@ const useStyles = makeStyles({
 
 const FilmDescription = () => {
   const classes = useStyles();
+  const { id } = useParams();
+
+  const [current, setCurrent] = useState(null);
+
+  const getCurrent = async () => {
+    try {
+      const response = await axios.get(
+        `${API_URL_DATA}/?apikey=${API__KEY}&i=${id}`,
+      );
+      await setCurrent(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getCurrent();
+  }, []);
+
+  if (current === null) {
+    return <CircularProgress />;
+  }
   return (
     <Box className={classes.wrapper}>
       <Box className={classes.media__wrapper}>
         <CardMedia className={classes.poster} />
-        <Typography className={classes.film__title}>Film name</Typography>
+        <Typography className={classes.film__title}>{current.Title}</Typography>
         <Typography className={classes.rating}>
-          Metascore: 12 Imdb rating: 12
+          Metascore: {current.Ratings[2].Value} Imdb rating:{' '}
+          {current.Ratings[0].Value}
         </Typography>
-        <Link to="/reserve/:id">
+        <Link to={`/reserve/${id}`}>
           <Button className={classes.btn}>Buy a ticket</Button>
         </Link>
       </Box>
@@ -120,30 +149,39 @@ const FilmDescription = () => {
         <Box className={classes.information}>
           <Typography className={classes.description}>Description:</Typography>
           <Typography className={classes.description}>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita,
-            labore. Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Expedita, labore. Lorem ipsum, dolor sit amet consectetur
-            adipisicing elit. Expedita, labore.
+            {current.Plot}
           </Typography>
           <Box className={classes.information__box}>
             <Typography>Info box</Typography>
 
-            <Typography>Country: dfsdf</Typography>
-            <Typography>Awards: dfsdf</Typography>
-            <Typography>Actors: fsdf</Typography>
-            <Typography>Year: 1589</Typography>
-            <Typography>Director: fsdf</Typography>
-            <Typography>Genre: fsdfsf</Typography>
-            <Typography>Language: dgdfgfg</Typography>
-            <Typography>Box office: dfsdf</Typography>
-            <Typography>Released: 1589</Typography>
+            <Typography>Country: {current.Country}</Typography>
+            <Typography>Awards: {current.Awards}</Typography>
+            <Typography>Actors: {current.Actors}</Typography>
+            <Typography>Year: {current.Year}</Typography>
+            <Typography>Director: {current.Director}</Typography>
+            <Typography>Genre: {current.Genre}</Typography>
+            <Typography>Language: {current.Language}</Typography>
+            <Typography>Box office: {current.BoxOffice}</Typography>
+            <Typography>Released: {current.Released}</Typography>
           </Box>
         </Box>
         <Box className={classes.photo__wrapper}>
-          <CardMedia className={classes.single__poster} />
-          <CardMedia className={classes.single__poster} />
-          <CardMedia className={classes.single__poster} />
-          <CardMedia className={classes.single__poster} />
+          <CardMedia
+            className={classes.single__poster}
+            image={current.Poster}
+          />
+          <CardMedia
+            className={classes.single__poster}
+            image={current.Poster}
+          />
+          <CardMedia
+            className={classes.single__poster}
+            image={current.Poster}
+          />
+          <CardMedia
+            className={classes.single__poster}
+            image={current.Poster}
+          />
         </Box>
       </Box>
     </Box>

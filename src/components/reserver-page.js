@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   Box,
   makeStyles,
@@ -7,7 +8,9 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
+import { useState } from 'react';
 import SelectedMovieCard from './selected-movie-card';
+import SingleSeat from './single-seat';
 
 const useStyles = makeStyles({
   wrapper: {
@@ -23,37 +26,32 @@ const useStyles = makeStyles({
     fontWeight: 'bold',
     marginBottom: 32,
   },
-  seat: {
-    width: 36,
-    height: 36,
-    backgroundColor: '#C4C4C4',
-    marginRight: 16,
-    marginBottom: 24,
-  },
-  available: {
-    border: '3px solid #85FF91',
-    '&:hover': {
-      backgroundColor: '#85FF91',
-    },
-  },
-  checked: {
-    border: '3px solid #FBC60A',
-    '&:hover': {
-      backgroundColor: '#FBC60A',
-    },
-  },
-  reserved: {
-    border: '3px solid #FF0000',
-    '&:hover': {
-      backgroundColor: '#FF0000',
-    },
-  },
 });
 
 const ReservePage = () => {
   const classes = useStyles();
+  const [checkedSeats, setCheckedCeats] = useState([]);
+  const [reservedSeats, setReservedSeats] = useState([]);
 
-  const classesForSeat = `${classes.seat} ${classes.available}`;
+  // const onClickSeat = (idSeat) => {
+  //   const currentSeat = idSeat;
+  //   const oldStyle = styleSeat.split(' ');
+
+  //   if (
+  //     checkedSeats.includes(currentSeat) === false &&
+  //     reservedSeats.includes(currentSeat) === false
+  //   ) {
+  //     setCheckedCeats([...checkedSeats, currentSeat]);
+  //     oldStyle[1] = `${classes.checked}`;
+  //   } else if (checkedSeats.includes(currentSeat) === true) {
+  //     // setReservedSeats([...reservedSeats, currentSeat]);
+  //     setCheckedCeats([...checkedSeats.filter((item) => item !== currentSeat)]);
+  //     oldStyle[1] = `${classes.available}`;
+  //   }
+  //   setStyle(oldStyle.join(' '));
+  // };
+  console.log(checkedSeats, reservedSeats);
+
   return (
     <Box className={classes.wrapper}>
       <Typography className={classes.mainTitle}>Choose your place </Typography>
@@ -62,11 +60,18 @@ const ReservePage = () => {
           <TableBody>
             {[1, 2, 3, 4, 5].map((row, index) => (
               <TableRow key={index}>
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((cell, i) => (
-                  <TableCell key={i}>
-                    <Box id={`${row}${cell}`} className={classesForSeat} />
-                  </TableCell>
-                ))}
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((cell, i) => {
+                  return (
+                    <SingleSeat
+                      key={i}
+                      id={`${row}${cell}`}
+                      checkedSeats={checkedSeats}
+                      setCheckedCeats={setCheckedCeats}
+                      reservedSeats={reservedSeats}
+                      setReservedSeats={setReservedSeats}
+                    />
+                  );
+                })}
               </TableRow>
             ))}
           </TableBody>

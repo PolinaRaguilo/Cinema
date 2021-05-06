@@ -5,7 +5,6 @@ import {
   makeStyles,
   Table,
   TableBody,
-  TableCell,
   TableRow,
   Typography,
 } from '@material-ui/core';
@@ -13,7 +12,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { API_URL_DATA } from '../config/constants';
-import useFilms from '../hooks/useFilms';
+
 import { API__KEY } from '../key';
 import SelectedMovieCard from './selected-movie-card';
 import SingleSeat from './single-seat';
@@ -39,7 +38,6 @@ const ReservePage = () => {
   const { id } = useParams();
   const [checkedSeats, setCheckedCeats] = useState([]);
   const [reservedSeats, setReservedSeats] = useState([]);
-  const [totalCost, setTotalCost] = useState(0);
 
   const [current, setCurrent] = useState(null);
 
@@ -74,12 +72,11 @@ const ReservePage = () => {
         return summa;
     }
   }, 0);
-  console.log(cost);
 
-  console.log(checkedSeats, reservedSeats);
   if (current === null) {
     return <CircularProgress />;
   }
+
   return (
     <Box className={classes.wrapper}>
       <Typography className={classes.mainTitle}>Choose your place </Typography>

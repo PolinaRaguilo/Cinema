@@ -1,4 +1,5 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
+
 import ReservedTicketsCard from './reserved-tickets-card';
 import SelectedMovieCard from './selected-movie-card';
 

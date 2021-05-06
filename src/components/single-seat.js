@@ -35,6 +35,7 @@ const SingleSeat = (props) => {
   const [styleSeat, setStyle] = useState(
     `${classes.seat} ${classes.available}`,
   );
+
   const {
     checkedSeats,
     setCheckedCeats,
@@ -45,7 +46,6 @@ const SingleSeat = (props) => {
   const onClickSeat = (idSeat) => {
     const currentSeat = idSeat;
     const oldStyle = styleSeat.split(' ');
-
     if (
       checkedSeats.includes(currentSeat) === false &&
       reservedSeats.includes(currentSeat) === false
@@ -57,6 +57,24 @@ const SingleSeat = (props) => {
       setCheckedCeats([...checkedSeats.filter((item) => item !== currentSeat)]);
       oldStyle[1] = `${classes.available}`;
     }
+    const cost = checkedSeats.reduce((summa, item) => {
+      switch (item.toString()[0]) {
+        case '1':
+          return summa + 4;
+        case '2':
+          return summa + 10;
+        case '3':
+          return summa + 10;
+        case '4':
+          return summa + 10;
+        case '5':
+          return summa + 14;
+        default:
+          return summa;
+      }
+    }, 0);
+    console.log(typeof cost);
+    props.setTotalCost(props.totalCost + cost);
     setStyle(oldStyle.join(' '));
   };
   const onClickHandler = () => {

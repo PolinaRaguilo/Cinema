@@ -76,9 +76,12 @@ const useStyles = makeStyles({
       color: 'white',
     },
   },
+  titleMovie: {
+    width: 'unset',
+  },
 });
 
-const SelectedMovieCard = () => {
+const SelectedMovieCard = (props) => {
   const classes = useStyles();
   const { pathname } = useLocation();
   const { id } = useParams();
@@ -92,7 +95,9 @@ const SelectedMovieCard = () => {
       }
     >
       <Link to={`/movie/${id}`} className={classes.link}>
-        <Typography className={classes.title}>Movie name</Typography>
+        <Typography className={`${classes.title} ${classes.titleMovie}`}>
+          {props.titleMovie}
+        </Typography>
       </Link>
 
       <CardContent className={classes.inner}>
@@ -101,7 +106,9 @@ const SelectedMovieCard = () => {
         ) : (
           <>
             <Typography className={classes.title}>Tickets amount:</Typography>
-            <Typography className={classes.title}>123</Typography>
+            <Typography className={classes.title}>
+              {props.ticketsAmount}
+            </Typography>
           </>
         )}
 
@@ -113,7 +120,7 @@ const SelectedMovieCard = () => {
         <Typography
           className={pathname === '/user' ? classes.alignRight : classes.title}
         >
-          123$
+          {props.totalCost}$
         </Typography>
       </CardContent>
       {pathname === '/user' ? (

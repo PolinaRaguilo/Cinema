@@ -58,6 +58,24 @@ const ReservePage = () => {
     getCurrent();
   }, []);
 
+  const cost = checkedSeats.reduce((summa, item) => {
+    switch (item.toString()[0]) {
+      case '1':
+        return summa + 4;
+      case '2':
+        return summa + 10;
+      case '3':
+        return summa + 10;
+      case '4':
+        return summa + 10;
+      case '5':
+        return summa + 14;
+      default:
+        return summa;
+    }
+  }, 0);
+  console.log(cost);
+
   console.log(checkedSeats, reservedSeats);
   if (current === null) {
     return <CircularProgress />;
@@ -79,8 +97,6 @@ const ReservePage = () => {
                       setCheckedCeats={setCheckedCeats}
                       reservedSeats={reservedSeats}
                       setReservedSeats={setReservedSeats}
-                      setTotalCost={setTotalCost}
-                      totslCost={totalCost}
                     />
                   );
                 })}
@@ -92,7 +108,7 @@ const ReservePage = () => {
       <SelectedMovieCard
         titleMovie={current.Title}
         ticketsAmount={checkedSeats.length}
-        totalCost={totalCost}
+        totalCost={cost}
       />
     </Box>
   );

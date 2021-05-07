@@ -5,8 +5,10 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 
 import { Link, useLocation, useParams } from 'react-router-dom';
+import { addInformation } from '../redux/actions/seatsAction';
 
 const useStyles = makeStyles({
   card: {
@@ -85,6 +87,11 @@ const SelectedMovieCard = (props) => {
   const classes = useStyles();
   const { pathname } = useLocation();
   const { id } = useParams();
+  const dispatch = useDispatch();
+
+  const addInforamtionForReserve = () => {
+    dispatch(addInformation(id, props.totalCost, props.ticketsAmount));
+  };
 
   return (
     <Card
@@ -102,7 +109,9 @@ const SelectedMovieCard = (props) => {
 
       <CardContent className={classes.inner}>
         {pathname === '/user' ? (
-          <Typography className={classes.ticketsUser}>123 tickets</Typography>
+          <Typography className={classes.ticketsUser}>
+            {props.ticketsAmount} tickets
+          </Typography>
         ) : (
           <>
             <Typography className={classes.title}>Tickets amount:</Typography>
@@ -127,7 +136,9 @@ const SelectedMovieCard = (props) => {
         <Button className={classes.add}>Reserve</Button>
       ) : (
         <Link to="/user">
-          <Button className={classes.add}>Add</Button>
+          <Button className={classes.add} onClick={addInforamtionForReserve}>
+            Add
+          </Button>
         </Link>
       )}
     </Card>

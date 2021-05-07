@@ -1,4 +1,5 @@
 import {
+  ADD_INFORMATION,
   ADD_MOVIE,
   CHECKED_DELETE,
   CHECKED_SEAT,
@@ -9,16 +10,16 @@ const initialState = [
     id: 'tt2527336',
     title: 'Star Wars: Episode VIII - The Last Jedi',
     totalCost: 0,
-    totalAmountSeats: 10,
-    checked: [11, 12],
+    totalSeats: 0,
+    checked: [],
     reserved: [25, 48],
   },
   {
     id: 'tt0076759',
     title: 'Star Wars: Episode IV - A New Hope',
     totalCost: 0,
-    totalAmountSeats: 2,
-    checked: [25, 48],
+    totalSeats: 0,
+    checked: [],
     reserved: [410, 16],
   },
 ];
@@ -62,14 +63,26 @@ const Seats = (state = initialState, action) => {
             id: payload.id,
             title: payload.title,
             totalCost: 0,
-            totalSeats: [],
+            totalSeats: 0,
             checked: [],
             reserved: [],
           },
         ];
       }
       return state;
-
+    case ADD_INFORMATION:
+      return [
+        ...state.map((item) => {
+          if (item.id === payload.filmId) {
+            return {
+              ...item,
+              totalCost: payload.cost,
+              totalSeats: payload.amountSeats,
+            };
+          }
+          return item;
+        }),
+      ];
     default:
       return state;
   }

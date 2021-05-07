@@ -1,4 +1,5 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
 import ReservedTicketsCard from './reserved-tickets-card';
 import SelectedMovieCard from './selected-movie-card';
@@ -21,12 +22,23 @@ const useStyles = makeStyles({
 
 const UserChoice = () => {
   const classes = useStyles();
+  const state = useSelector((state) => state.seats);
 
   return (
     <Box className={classes.wrapper}>
       <Typography className={classes.title}>Your tickets:</Typography>
-      <SelectedMovieCard />
-      <SelectedMovieCard />
+      {state
+        .filter((item) => item.totalCost !== 0)
+        .map((item) => {
+          console.log(item.totalSeats);
+          return (
+            <SelectedMovieCard
+              titleMovie={item.title}
+              ticketsAmount={item.totalSeats}
+              totalCost={item.totalCost}
+            />
+          );
+        })}
 
       <ReservedTicketsCard />
     </Box>

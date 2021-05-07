@@ -35,35 +35,49 @@ const useStyles = makeStyles({
 const SingleSeat = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [styleSeat, setStyle] = useState(
-    `${classes.seat} ${classes.available}`,
-  );
+
   const { checkedSeats, reservedSeats, filmId } = props;
 
   const onClickSeat = (idSeat) => {
     const currentSeat = Number(idSeat);
-    const oldStyle = styleSeat.split(' ');
     if (
       checkedSeats.includes(currentSeat) === false &&
       reservedSeats.includes(currentSeat) === false
     ) {
       dispatch(setChecked(filmId, currentSeat));
-      oldStyle[1] = `${classes.checked}`;
     } else if (checkedSeats.includes(currentSeat) === true) {
       dispatch(deleteChecked(filmId, currentSeat));
-      oldStyle[1] = `${classes.available}`;
     }
-
-    setStyle(oldStyle.join(' '));
   };
 
   const onClickHandler = () => {
     onClickSeat(Number(props.id));
   };
 
+  const seatClasses = (idS) => {
+    const idSeat = Number(idS);
+    let newStyle = `${classes.seat} `;
+    if (
+      checkedSeats.includes(idSeat) === false &&
+      reservedSeats.includes(idSeat) === false
+    ) {
+      newStyle += `${classes.available}`;
+    } else if (
+      checkedSeats.includes(idSeat) === true &&
+      reservedSeats.includes(idSeat) === false
+    ) {
+      newStyle += `${classes.checked}`;
+    } else {
+      newStyle += `${classes.reserved}`;
+    }
+    return newStyle;
+  };
+
+  const newS = seatClasses(props.id);
+
   return (
     <TableCell>
-      <Box id={props.id} className={styleSeat} onClick={onClickHandler} />
+      <Box id={props.id} className={newS} onClick={onClickHandler} />
     </TableCell>
   );
 };

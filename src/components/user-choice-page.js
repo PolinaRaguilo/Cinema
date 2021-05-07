@@ -30,11 +30,11 @@ const UserChoice = () => {
       {state
         .filter((item) => item.totalCost !== 0)
         .map((item) => {
-          console.log(item.totalSeats);
           return (
             <SelectedMovieCard
+              movieId={item.id}
               titleMovie={item.title}
-              ticketsAmount={item.totalSeats}
+              ticketsAmount={item.checked.length}
               totalCost={item.totalCost}
             />
           );

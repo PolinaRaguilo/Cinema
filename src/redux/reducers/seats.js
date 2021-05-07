@@ -1,6 +1,7 @@
 import {
   ADD_INFORMATION,
   ADD_MOVIE,
+  ADD_TO_RESERVE,
   CHECKED_DELETE,
   CHECKED_SEAT,
 } from '../../config/constants';
@@ -77,7 +78,21 @@ const Seats = (state = initialState, action) => {
             return {
               ...item,
               totalCost: payload.cost,
-              totalSeats: payload.amountSeats,
+            };
+          }
+          return item;
+        }),
+      ];
+    case ADD_TO_RESERVE:
+      return [
+        ...state.map((item) => {
+          if (item.id === payload.filmId) {
+            return {
+              ...item,
+              reserved: [...item.reserved, ...item.checked],
+              totalSeats: item.checked.length,
+              checked: [],
+              totalCost: 0,
             };
           }
           return item;

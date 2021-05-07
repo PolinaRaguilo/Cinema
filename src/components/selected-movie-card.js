@@ -8,7 +8,7 @@ import {
 import { useDispatch } from 'react-redux';
 
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { addInformation } from '../redux/actions/seatsAction';
+import { addInformation, addToReserve } from '../redux/actions/seatsAction';
 
 const useStyles = makeStyles({
   card: {
@@ -90,7 +90,11 @@ const SelectedMovieCard = (props) => {
   const dispatch = useDispatch();
 
   const addInforamtionForReserve = () => {
-    dispatch(addInformation(id, props.totalCost, props.ticketsAmount));
+    dispatch(addInformation(id, props.totalCost));
+  };
+
+  const addToReserveCard = () => {
+    dispatch(addToReserve(props.movieId, props.ticketsAmount));
   };
 
   return (
@@ -133,7 +137,9 @@ const SelectedMovieCard = (props) => {
         </Typography>
       </CardContent>
       {pathname === '/user' ? (
-        <Button className={classes.add}>Reserve</Button>
+        <Button className={classes.add} onClick={addToReserveCard}>
+          Reserve
+        </Button>
       ) : (
         <Link to="/user">
           <Button className={classes.add} onClick={addInforamtionForReserve}>

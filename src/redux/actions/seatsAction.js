@@ -1,6 +1,7 @@
 import {
   ADD_INFORMATION,
   ADD_MOVIE,
+  ADD_TO_RESERVE,
   CHECKED_DELETE,
   CHECKED_SEAT,
 } from '../../config/constants';
@@ -30,5 +31,12 @@ export const addInformation = (filmId, cost, amountSeats) => {
   return {
     type: ADD_INFORMATION,
     payload: { filmId, cost, amountSeats },
+  };
+};
+
+export const addToReserve = (filmId) => {
+  return {
+    type: ADD_TO_RESERVE,
+    payload: { filmId },
   };
 };

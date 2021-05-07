@@ -9,9 +9,11 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { API_URL_DATA } from '../config/constants';
 import { API__KEY } from '../key';
+import { addMovie } from '../redux/actions/seatsAction';
 
 const useStyles = makeStyles({
   wrapper: {
@@ -114,6 +116,12 @@ const FilmDescription = () => {
 
   const [current, setCurrent] = useState(null);
 
+  const dispatch = useDispatch();
+
+  const onAddHandler = () => {
+    dispatch(addMovie(id, current.Title));
+  };
+
   const getCurrent = async () => {
     try {
       const response = await axios.get(
@@ -142,7 +150,9 @@ const FilmDescription = () => {
           {current.Ratings[0].Value}
         </Typography>
         <Link to={`/reserve/${id}`}>
-          <Button className={classes.btn}>Buy a ticket</Button>
+          <Button className={classes.btn} onClick={onAddHandler}>
+            Buy a ticket
+          </Button>
         </Link>
       </Box>
       <Box className={classes.inner__wrapper}>

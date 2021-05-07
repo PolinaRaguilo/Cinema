@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { Box, makeStyles, TableCell } from '@material-ui/core';
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setChecked, deleteChecked } from '../redux/actions/seatsAction';
 
 const useStyles = makeStyles({
   seat: {
@@ -32,34 +34,29 @@ const useStyles = makeStyles({
 
 const SingleSeat = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [styleSeat, setStyle] = useState(
     `${classes.seat} ${classes.available}`,
   );
-
-  const {
-    checkedSeats,
-    setCheckedCeats,
-    reservedSeats,
-    setReservedSeats,
-  } = props;
+  const { checkedSeats, reservedSeats, filmId } = props;
 
   const onClickSeat = (idSeat) => {
-    const currentSeat = idSeat;
+    const currentSeat = Number(idSeat);
     const oldStyle = styleSeat.split(' ');
     if (
       checkedSeats.includes(currentSeat) === false &&
       reservedSeats.includes(currentSeat) === false
     ) {
-      setCheckedCeats([...checkedSeats, currentSeat]);
+      dispatch(setChecked(filmId, currentSeat));
       oldStyle[1] = `${classes.checked}`;
     } else if (checkedSeats.includes(currentSeat) === true) {
-      // setReservedSeats([...reservedSeats, currentSeat]);
-      setCheckedCeats([...checkedSeats.filter((item) => item !== currentSeat)]);
+      dispatch(deleteChecked(filmId, currentSeat));
       oldStyle[1] = `${classes.available}`;
     }
 
     setStyle(oldStyle.join(' '));
   };
+
   const onClickHandler = () => {
     onClickSeat(Number(props.id));
   };

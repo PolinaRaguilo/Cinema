@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { API_URL_DATA } from '../config/constants';
 
@@ -36,10 +37,12 @@ const useStyles = makeStyles({
 const ReservePage = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const [checkedSeats, setCheckedCeats] = useState([]);
-  const [reservedSeats, setReservedSeats] = useState([]);
+
+  const state = useSelector((state) => state.seats);
 
   const [current, setCurrent] = useState(null);
+
+  const currentReserve = state.find((item) => item.id === id);
 
   const getCurrent = async () => {
     try {
@@ -56,7 +59,7 @@ const ReservePage = () => {
     getCurrent();
   }, []);
 
-  const cost = checkedSeats.reduce((summa, item) => {
+  const cost = currentReserve.checked.reduce((summa, item) => {
     switch (item.toString()[0]) {
       case '1':
         return summa + 4;
@@ -90,10 +93,9 @@ const ReservePage = () => {
                     <SingleSeat
                       key={i}
                       id={`${row}${cell}`}
-                      checkedSeats={checkedSeats}
-                      setCheckedCeats={setCheckedCeats}
-                      reservedSeats={reservedSeats}
-                      setReservedSeats={setReservedSeats}
+                      checkedSeats={currentReserve.checked}
+                      reservedSeats={currentReserve.reserved}
+                      filmId={id}
                     />
                   );
                 })}
@@ -104,7 +106,7 @@ const ReservePage = () => {
       </Box>
       <SelectedMovieCard
         titleMovie={current.Title}
-        ticketsAmount={checkedSeats.length}
+        ticketsAmount={currentReserve.checked.length}
         totalCost={cost}
       />
     </Box>

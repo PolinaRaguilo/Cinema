@@ -43,9 +43,14 @@ const Header = () => {
           labore.
         </Typography>
       </Box>
-      {pathname !== '/' && (
+      {pathname !== '/' && pathname !== '/404' && (
         <Button onClick={() => history.goBack()} className={classes.btn__back}>
           Go back
+        </Button>
+      )}
+      {pathname === '/404' && (
+        <Button onClick={() => history.push('/')} className={classes.btn__back}>
+          Go to the main page
         </Button>
       )}
     </Box>

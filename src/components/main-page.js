@@ -12,6 +12,7 @@ const {
   makeStyles,
 
   CircularProgress,
+  Typography,
 } = require('@material-ui/core');
 const { default: FilmCard } = require('./film-card');
 
@@ -31,6 +32,10 @@ const useStyles = makeStyles(() => ({
   form__search: {
     display: 'flex',
     marginBottom: 48,
+  },
+  no__results: {
+    fontSize: 24,
+    fontWeight: 'bold',
   },
 }));
 
@@ -56,15 +61,24 @@ const MainPage = () => {
         <TextField variant="outlined" placeholder="Type to search..." />
         <Button className={classes.btn__search}>Search</Button>
       </form>
-      {films.map((item) => {
-        const { imdbID } = item;
-        return <FilmCard id={imdbID} key={imdbID} />;
-      })}
-      <Pagination
-        page={currPage}
-        onChange={(e, page) => onChangePage(e, page)}
-        count={Math.ceil(total / 10)}
-      />
+      {films.length === 0 ? (
+        <Typography className={classes.no__results}>
+          Nothing found <br />
+          Please try another one
+        </Typography>
+      ) : (
+        <>
+          {films.map((item) => {
+            const { imdbID } = item;
+            return <FilmCard id={imdbID} key={imdbID} />;
+          })}
+          <Pagination
+            page={currPage}
+            onChange={(e, page) => onChangePage(e, page)}
+            count={Math.ceil(total / 10)}
+          />
+        </>
+      )}
     </Box>
   );
 };

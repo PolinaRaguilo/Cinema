@@ -90,7 +90,7 @@ const Seats = (state = initialState, action) => {
             return {
               ...item,
               reserved: [...item.reserved, ...item.checked],
-              totalSeats: item.checked.length,
+              totalSeats: item.totalSeats + item.checked.length,
               checked: [],
               totalCost: 0,
             };

@@ -28,7 +28,7 @@ const useStyles = makeStyles({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    width: 270,
+    width: '270px !important',
     marginBottom: 23,
 
     '&:nth-child(even)': {

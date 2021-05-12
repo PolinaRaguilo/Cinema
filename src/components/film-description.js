@@ -38,8 +38,8 @@ const useStyles = makeStyles({
     bottom: 0,
     left: 24,
     top: 16,
-    // width: 454,
-    height: 57,
+    width: 515,
+    height: 75,
     backgroundColor: 'rgba(43, 34, 67, 0.1)',
     fontSize: 24,
     color: '#000000',
@@ -140,14 +140,17 @@ const FilmDescription = () => {
   if (current === null) {
     return <CircularProgress />;
   }
+  console.log(current.Ratings);
   return (
     <Box className={classes.wrapper}>
       <Box className={classes.media__wrapper}>
         <CardMedia className={classes.poster} />
         <Typography className={classes.film__title}>{current.Title}</Typography>
         <Typography className={classes.rating}>
-          Metascore: {current.Ratings[2].Value} Imdb rating:{' '}
-          {current.Ratings[0].Value}
+          Metascore:{' '}
+          {current.Ratings.length === 0 ? 'none' : current.Ratings[2].Value}{' '}
+          Imdb rating:{' '}
+          {current.Ratings.length === 0 ? 'none' : current.Ratings[0].Value}
         </Typography>
         <Link to={`/reserve/${id}`}>
           <Button className={classes.btn} onClick={onAddHandler}>

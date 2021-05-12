@@ -10,9 +10,9 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { API_URL_DATA } from '../config/constants';
-
 import { API__KEY } from '../key';
 
 const useStyles = makeStyles({
@@ -93,6 +93,7 @@ const useStyles = makeStyles({
 
 const FilmCard = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const { id } = props;
 
@@ -103,7 +104,6 @@ const FilmCard = (props) => {
       const response = await axios.get(
         `${API_URL_DATA}/?apikey=${API__KEY}&i=${id}`,
       );
-
       await setCurrent(response.data);
     } catch (e) {
       console.log(e);

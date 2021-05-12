@@ -1,6 +1,10 @@
+/* eslint-disable no-unused-vars */
 import {
+  FETCH__CURRENT,
+  FETCH__ERROR__CURRENT,
   FETCH__ERROR__FILMS,
   FETCH__FILMS,
+  FETCH__START__CURRENT,
   FETCH__START__FILMS,
 } from '../../config/constants';
 

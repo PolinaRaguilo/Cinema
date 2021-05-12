@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { API_URL_DATA } from '../config/constants';
 import { API__KEY } from '../key';
@@ -38,7 +37,7 @@ const useStyles = makeStyles({
       width: 390,
     },
     '& p:nth-child(1)': {
-      width: 300,
+      width: 350,
     },
   },
   film__title: {
@@ -93,7 +92,6 @@ const useStyles = makeStyles({
 
 const FilmCard = (props) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
 
   const { id } = props;
 
@@ -120,7 +118,14 @@ const FilmCard = (props) => {
 
   return (
     <Card className={classes.card__film}>
-      <CardMedia className={classes.poster} image={current.Poster} />
+      <CardMedia
+        className={classes.poster}
+        image={
+          current.Poster === 'N/A'
+            ? 'https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg'
+            : current.Poster
+        }
+      />
       <CardContent className={classes.description}>
         <Typography className={classes.film__title}>{current.Title}</Typography>
         <Typography className={classes.description__text}>
@@ -132,9 +137,11 @@ const FilmCard = (props) => {
       </CardContent>
       <Box>
         <Box className={classes.tags__wrapper}>
-          {current.Genre.split(',').map((item) => {
-            return <Typography className={classes.tag}>{item}</Typography>;
-          })}
+          {current.Genre.split(',')
+            .slice(0, 3)
+            .map((item) => {
+              return <Typography className={classes.tag}>{item}</Typography>;
+            })}
         </Box>
         <Typography className={classes.description__text}>
           {current.Year} year

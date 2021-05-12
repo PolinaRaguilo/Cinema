@@ -117,7 +117,7 @@ const FilmCard = (props) => {
   if (current === null) {
     return null;
   }
-  console.log(current);
+
   return (
     <Card className={classes.card__film}>
       <CardMedia className={classes.poster} image={current.Poster} />

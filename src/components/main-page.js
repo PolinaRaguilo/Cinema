@@ -1,20 +1,17 @@
+import {
+  Box,
+  Button,
+  CircularProgress,
+  makeStyles,
+  TextField,
+  Typography,
+} from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 
-import { useState } from 'react';
-import { API_URL_DATA } from '../config/constants';
-import useFilms from '../hooks/useFilms';
-import { API__KEY } from '../key';
-
-const {
-  Box,
-  TextField,
-  Button,
-  makeStyles,
-
-  CircularProgress,
-  Typography,
-} = require('@material-ui/core');
-const { default: FilmCard } = require('./film-card');
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fethcFilms } from '../redux/actions/filmsAction';
+import FilmCard from './film-card';
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -43,32 +40,52 @@ const MainPage = () => {
   const classes = useStyles();
 
   const [currPage, setPage] = useState(1);
+  const [search, setSearch] = useState('star wars');
 
-  const { films, total, isLoading } = useFilms(
-    `${API_URL_DATA}/?s=star wars&page=${currPage}&type=movie&apikey=${API__KEY}`,
-  );
+  const { filmsData, isLoading, total } = useSelector((state) => state.films);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fethcFilms(search, currPage));
+  }, []);
+
+  const onChangeInput = (e) => {
+    const { value } = e.target;
+    setSearch(value);
+  };
 
   const onChangePage = (e, page) => {
     setPage(page);
+    dispatch(fethcFilms(search, page));
+  };
+
+  const onSearch = async () => {
+    await dispatch(fethcFilms(search, 1));
   };
   if (isLoading) {
     return <CircularProgress />;
   }
-
   return (
     <Box className={classes.wrapper}>
       <form className={classes.form__search}>
-        <TextField variant="outlined" placeholder="Type to search..." />
-        <Button className={classes.btn__search}>Search</Button>
+        <TextField
+          variant="outlined"
+          placeholder="Type to search..."
+          onChange={onChangeInput}
+        />
+        <Button className={classes.btn__search} onClick={onSearch}>
+          Search
+        </Button>
       </form>
-      {films.length === 0 ? (
+      {filmsData.length === 0 ? (
         <Typography className={classes.no__results}>
           Nothing found <br />
           Please try another one
         </Typography>
       ) : (
         <>
-          {films.map((item) => {
+          {filmsData.map((item) => {
             const { imdbID } = item;
             return <FilmCard id={imdbID} key={imdbID} />;
           })}

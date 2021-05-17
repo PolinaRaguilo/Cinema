@@ -40,14 +40,15 @@ const MainPage = () => {
   const classes = useStyles();
 
   const [currPage, setPage] = useState(1);
-  const [search, setSearch] = useState('star wars');
+  const [search, setSearch] = useState('');
 
   const { filmsData, isLoading, total } = useSelector((state) => state.films);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fethcFilms(search, currPage));
+    dispatch(fethcFilms('star wars', currPage));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onChangeInput = (e) => {
@@ -60,21 +61,25 @@ const MainPage = () => {
     dispatch(fethcFilms(search, page));
   };
 
-  const onSearch = async () => {
-    await dispatch(fethcFilms(search, 1));
+  const onSearch = (e) => {
+    e.preventDefault();
+    if (search.trim() !== '') {
+      dispatch(fethcFilms(search.trim(), 1));
+      setSearch('');
+    }
   };
   if (isLoading) {
     return <CircularProgress />;
   }
   return (
     <Box className={classes.wrapper}>
-      <form className={classes.form__search}>
+      <form className={classes.form__search} onSubmit={onSearch}>
         <TextField
           variant="outlined"
           placeholder="Type to search..."
           onChange={onChangeInput}
         />
-        <Button className={classes.btn__search} onClick={onSearch}>
+        <Button className={classes.btn__search} type="submit">
           Search
         </Button>
       </form>

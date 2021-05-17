@@ -6,24 +6,7 @@ import {
   CHECKED_SEAT,
 } from '../../config/constants';
 
-const initialState = [
-  {
-    id: 'tt2527336',
-    title: 'Star Wars: Episode VIII - The Last Jedi',
-    totalCost: 0,
-    totalSeats: 0,
-    checked: [],
-    reserved: [25, 48],
-  },
-  {
-    id: 'tt0076759',
-    title: 'Star Wars: Episode IV - A New Hope',
-    totalCost: 0,
-    totalSeats: 0,
-    checked: [],
-    reserved: [410, 16],
-  },
-];
+const initialState = [];
 
 const Seats = (state = initialState, action) => {
   const { payload, type } = action;

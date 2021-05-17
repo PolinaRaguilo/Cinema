@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import {
   Box,
   Button,
@@ -129,29 +128,30 @@ const FilmDescription = () => {
       );
       await setCurrent(response.data);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.log(e);
     }
   };
 
   useEffect(() => {
     getCurrent();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (current === null) {
     return <CircularProgress />;
   }
-  console.log(current.Ratings);
+
   return (
     <Box className={classes.wrapper}>
       <Box className={classes.media__wrapper}>
         <CardMedia className={classes.poster} />
         <Typography className={classes.film__title}>{current.Title}</Typography>
+
         <Typography className={classes.rating}>
-          Metascore:{' '}
-          {current.Ratings.length === 0 ? 'none' : current.Ratings[2].Value}{' '}
-          Imdb rating:{' '}
-          {current.Ratings.length === 0 ? 'none' : current.Ratings[0].Value}
+          Metascore: {current.Metascore} Imdb rating: {current.imdbRating}
         </Typography>
+
         <Link to={`/reserve/${id}`}>
           <Button className={classes.btn} onClick={onAddHandler}>
             Buy a ticket

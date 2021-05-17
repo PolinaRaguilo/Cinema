@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import {
   Box,
   Button,
@@ -37,7 +36,7 @@ const useStyles = makeStyles({
       width: 390,
     },
     '& p:nth-child(1)': {
-      width: 350,
+      // width: 350,
     },
   },
   film__title: {
@@ -51,9 +50,14 @@ const useStyles = makeStyles({
   tags__wrapper: {
     display: 'flex',
     marginBottom: 20,
+    width: 210,
+    justifyContent: 'flex-end',
     '&~p': {
       textAlign: 'right',
     },
+  },
+  tags__more: {
+    flexWrap: 'wrap',
   },
   tag: {
     minWidth: 50,
@@ -63,8 +67,8 @@ const useStyles = makeStyles({
     borderRadius: 5,
     padding: '5px 8px 6px 10px',
     marginRight: 10,
-    '&:last-child': {
-      marginRight: 0,
+    '&:nth-child(n+4)': {
+      marginTop: 7,
     },
   },
   button__more: {
@@ -104,12 +108,14 @@ const FilmCard = (props) => {
       );
       await setCurrent(response.data);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.log(e);
     }
   };
 
   useEffect(() => {
     getCurrent();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (current === null) {
@@ -136,12 +142,18 @@ const FilmCard = (props) => {
         </Typography>
       </CardContent>
       <Box>
-        <Box className={classes.tags__wrapper}>
-          {current.Genre.split(',')
-            .slice(0, 3)
-            .map((item) => {
-              return <Typography className={classes.tag}>{item}</Typography>;
-            })}
+        <Box
+          className={`${classes.tags__wrapper} ${
+            current.Genre.split(',').length > 3 ? `${classes.tags__more}` : ' '
+          }`}
+        >
+          {current.Genre.split(',').map((item, i) => {
+            return (
+              <Typography key={i} className={classes.tag}>
+                {item}
+              </Typography>
+            );
+          })}
         </Box>
         <Typography className={classes.description__text}>
           {current.Year} year

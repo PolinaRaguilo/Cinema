@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import {
   Box,
   CircularProgress,
@@ -51,12 +50,14 @@ const ReservePage = () => {
       );
       await setCurrent(response.data);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.log(e);
     }
   };
 
   useEffect(() => {
     getCurrent();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const cost = currentReserve.checked.reduce((summa, item) => {

@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-vars */
 import { Box, makeStyles, TableCell } from '@material-ui/core';
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setChecked, deleteChecked } from '../redux/actions/seatsAction';
 
 const useStyles = makeStyles({
